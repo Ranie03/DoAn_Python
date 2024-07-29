@@ -1,0 +1,75 @@
+{% extends "pages/layout.html" %} {% block title %} Thể Loại {% endblock %} {%block libraryCSS %}
+{% endblock %} {%block content %}
+<div class="col-9 my-3" >
+    <h2>Danh Sách Hóa Đơn</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col" class="text-center text-capitalize">Ngày đặt hàng</th>
+                <th scope="col" class="text-center text-capitalize">Mã vận đơn</th>
+                <th scope="col" class="text-center text-capitalize">Trạng Thái</th>
+                <th scope="col" class="text-center text-capitalize">Tên sản phẩm</th>
+                <th scope="col" class="text-center text-capitalize">Tổng tiền</th>
+                <th scope="col" class="text-center text-capitalize">Thao tác</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hoaDon in hoaDonLST %}
+            <tr>
+                <td>{{ hoaDon.NgayLap}}</td>
+                <td>{{ hoaDon.MaHD }}</td>
+
+                <td>
+                    <!-- {{hoaDon.TrangThai}} -->
+                    {% load humanize %}
+                    {% if hoaDon.TrangThai == 'pending'%}
+                    
+                        <p class="text-secondary fw-bold">Chờ xác nhận</p>
+                  
+                    {% elif hoaDon.TrangThai == 'processing'%}
+                  
+                         <p class="text-warning fw-bold">Chờ giao hàng</p>
+                    
+                    {% elif hoaDon.TrangThai == 'completed'%}
+                  
+                         <p class="text-success fw-bold">Đã nhận hàng</p>
+                    
+                    {% elif hoaDon.TrangThai == 'cancel'%}
+                  
+                        <p class="text-danger fw-bold">Đã hủy</p>
+                    
+                   {% endif %}
+                    
+
+                </td>
+                <td>
+                    <ul class="list-group">
+                        {% for chiTiet in chiTietHD %}
+                            {% if chiTiet.MaHD == hoaDon %}
+                        <li class="list-group-item border-0">{{ chiTiet.MaSP.TenSP }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </td>
+                {% load humanize %}
+                <td>{{ hoaDon.TongTien|floatformat:"0"|intcomma }}</td>
+                <td>
+                    <a class="btn btn-primary" href="/dashboard/XemCT_HD/{{hoaDon.MaHD}}">Xem chi tiết</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/dashboard/XacNhan/{{hoaDon.MaHD}}">Xác nhận</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/dashboard/Huy/{{hoaDon.MaHD}}">Hủy     </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

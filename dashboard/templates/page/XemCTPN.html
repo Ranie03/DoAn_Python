@@ -1,0 +1,19 @@
+{% extends "pages/layout.html" %}
+{% block title %} Xem Chi Tiết Sản Phẩm {% endblock %}
+{% block libraryCSS %}
+
+{% endblock %}
+{% block content %}
+<div class="col-9 my-3">
+    {% for item in DM_XemCTPN %}
+    <p>MaCTPN: {{ item.MaCTPN }}</p>
+    <p>MaPhieuNhap: {{ item.MaPhieuNhap }}</p>
+    <p> MaSP: {{ item.MaSP }}</p>
+    <p>MaNCC: {{ item.MaNCC }}</p>
+    <p>SoLuong: {{ item.SoLuong }}</p>
+    <p> GiaNhap: {{ item.GiaNhap }}</p>
+{% endfor %}
+   
+</div>
+{% endblock %}
+    

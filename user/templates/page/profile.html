@@ -1,0 +1,121 @@
+{% extends "pages/base.html" %} {% block title %}Hồ sơ người dùng{% endblock %} {% block content %}
+<div class="m-3">
+	<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a class="link-underline link-underline-opacity-0" href="/">Trang chủ</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">Hồ sơ người dùng</li>
+		</ol>
+	</nav>
+	<div class="row">
+		<div class="col-3">
+			<div class="list-group">
+				<a href="/user/" class="list-group-item list-group-item-action active" aria-current="true"
+					>Hồ sơ người dùng</a
+				>
+				<a href="{% url 'receipt' %}" class="list-group-item list-group-item-action">Đơn hàng của bạn</a>
+			</div>
+			<div class="mt-3 mb-3 ms-5 me-5">
+				<a class="btn btn-outline-danger d-block" href="/account/logout/">Đăng xuất</a>
+			</div>
+		</div>
+		<div class="col-9">
+			<h3 class="text-primary">Thông tin tài khoản</h3>
+			<div class="mb-5">
+				<form action="{% url 'updateProfile' %}" method="post">
+					{% csrf_token %}
+					<div class="mb-3">
+						<label for="InputFullName" class="form-label">Họ và tên:</label>
+						{% if acc.Quyen == 'nhanvien' %}
+						<input
+							type="text"
+							class="form-control"
+							id="InputFullName"
+							placeholder="Nguyễn Văn A"
+							value="{{kh.TenNV}}"
+							name="full_name"
+						/>
+						{% else %}
+						<input
+							type="text"
+							class="form-control"
+							id="InputFullName"
+							placeholder="Nguyễn Văn A"
+							value="{{kh.TenKH}}"
+							name="full_name"
+						/>
+						{% endif %}
+					</div>
+					<div class="mb-3">
+						<label for="InputEmail" class="form-label">Email:</label>
+						<input
+							type="email"
+							class="form-control"
+							id="InputEmail"
+							placeholder="example@domain.com"
+							value="{{kh.Email}}"
+							name="email"
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="InputNumberPhone" class="form-label">Số điện thoại:</label>
+						<input
+							type="tel"
+							class="form-control"
+							id="InputNumberPhone"
+							placeholder="(+84) 0123.456.789"
+							value="{{kh.SoDT}}"
+							name="phone_number"
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="InputAddress" class="form-label">Địa chỉ:</label>
+						<input
+							type="text"
+							class="form-control"
+							id="InputAddress"
+							placeholder="140 Lê Trọng Tấn, P.Tây Thạnh, Q.Tân Phú, TP.HCM"
+							value="{{kh.DiaChi}}"
+							name="address"
+						/>
+					</div>
+					<button type="submit" class="btn btn-primary float-end">Cập nhật</button>
+				</form>
+			</div>
+
+			<h3 class="text-primary">Thông tin đăng nhập</h3>
+			<div class="mb-5">
+				<form action="{% url 'updatePassword' %}" method="post">
+					{% csrf_token %}
+					<div class="mb-3">
+						<label for="InputUserName" class="form-label">Username:</label>
+						<input
+							type="text"
+							class="form-control disabled"
+							id="InputUserName"
+							placeholder="nguyenvana123"
+							value="{{acc.UserName}}"
+							name="username"
+							disabled
+						/>
+					</div>
+					<div class="mb-3">
+						<label for="InputCurrentPassword" class="form-label">Mật khẩu hiện tại:</label>
+						<input type="password" class="form-control" id="InputCurrentPassword" name="current_password"/>
+					</div>
+					<div class="mb-3">
+						<label for="InputNewPassword" class="form-label">Mật khẩu mới:</label>
+						<input type="password" class="form-control" id="InputNewPassword" name="new_password"/>
+					</div>
+					<div class="mb-3">
+						<label for="InputConfirmPassword" class="form-label">Nhập lại mật khẩu mới:</label>
+						<input type="password" class="form-control" id="InputConfirmPassword" name="confirm_password" />
+					</div>
+					<button type="submit" class="btn btn-primary float-end">Cập nhật</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
